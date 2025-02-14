@@ -13,7 +13,6 @@ push_to_github:
     - echo "github.com ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIOMqqnkVzrm0SdG6UOoqKLsabgH5C9okWi0dh2l9GKJl" > ~/.ssh/known_hosts
   script:
     # 调试信息
-    - echo "当前分支: $CI_COMMIT_BRANCH"
     - git remote -v
     # 添加 GitHub 远程地址
     - git remote remove github || true
