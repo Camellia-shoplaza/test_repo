@@ -21,6 +21,6 @@ push_to_github:
     # 添加 GitHub 仓库作为远程仓库
     - git remote add github git@github.com:Camellia-shoplaza/test_repo.git
     # 推送代码到 GitHub 仓库的主分支
-    - git push -u github HEAD:master
+    - git push -u github HEAD:refs/heads/master
   only:
     - master  # 仅在 master 分支有代码推送时触发此任务
