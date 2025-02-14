@@ -7,12 +7,16 @@ push_to_github:
   before_script:
     # 配置 SSH
     - mkdir -p ~/.ssh
-    - echo "$GITHUB_PRIVATE_TOKEN" > ~/.ssh/id_ed25519
+    - echo "$GITHUB_PRIVATE_TOKEN" | base64 -d > ~/.ssh/id_ed25519  # 假设私钥是 base64 编码的
     - chmod 600 ~/.ssh/id_ed25519
-    # 添加 SSH Known Hosts
+    # 添加 GitHub 的 Known Hosts
     - echo "github.com ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIOMqqnkVzrm0SdG6UOoqKLsabgH5C9okWi0dh2l9GKJl" > ~/.ssh/known_hosts
   script:
-    # 添加 GitHub 仓库远程地址
+    # 调试信息
+    - echo "当前分支: $CI_COMMIT_BRANCH"
+    - git remote -v
+    # 添加 GitHub 远程地址
+    - git remote remove github || true
     - git remote add github git@github.com:Camellia-shoplaza/test_repo.git
     # 推送到 master 分支
     - git push github HEAD:master --force
