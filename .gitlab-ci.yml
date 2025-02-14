@@ -1,0 +1,21 @@
+stages:
+  - deploy
+
+push_to_github:
+  stage: deploy
+  image: alpine/git
+  before_script:
+    # 配置 SSH
+    - mkdir -p ~/.ssh
+    - echo "$GITHUB_PRIVATE_TOKEN" > ~/.ssh/id_ed25519
+    - chmod 600 ~/.ssh/id_ed25519
+    # 添加 SSH Known Hosts
+    - echo "github.com ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIOMqqnkVzrm0SdG6UOoqKLsabgH5C9okWi0dh2l9GKJl" > ~/.ssh/known_hosts
+  script:
+    # 添加 GitHub 仓库远程地址
+    - git remote add github git@github.com:git@github.com:Camellia-shoplaza/test_repo.git
+    # 推送到 master 分支
+    - git push github HEAD:master --force
+  rules:
+    # 仅在 master 分支触发
+    - if: $CI_COMMIT_BRANCH == "master"
