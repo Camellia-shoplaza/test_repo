@@ -1,24 +1,26 @@
 stages:
-  - deploy
+  - push_to_github
 
 push_to_github:
-  stage: deploy
-  image: alpine/git
+  stage: push_to_github
+  image: alpine:latest
   before_script:
-    # 配置 SSH
+    # 安装 SSH 客户端和 Git
+    - apk add --no-cache openssh git
+    # 创建 SSH 目录
     - mkdir -p ~/.ssh
-    - echo "$GITHUB_PRIVATE_TOKEN" | base64 -d > ~/.ssh/id_ed25519  # 假设私钥是 base64 编码的
-    - chmod 600 ~/.ssh/id_ed25519
-    # 添加 GitHub 的 Known Hosts
-    - echo "github.com ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIOMqqnkVzrm0SdG6UOoqKLsabgH5C9okWi0dh2l9GKJl" > ~/.ssh/known_hosts
+    # 设置 SSH 私钥
+    - echo "$GITHUB_PRIVATE_KEY" > ~/.ssh/id_rsa
+    - chmod 600 ~/.ssh/id_rsa
+    # 添加 GitHub 的 SSH 指纹
+    - ssh-keyscan github.com >> ~/.ssh/known_hosts
+    # 配置 Git 用户信息
+    - git config --global user.email "lijiayang@shoplazza.com"
+    - git config --global user.name "Lijiayang"
   script:
-    # 调试信息
-    - git remote -v
-    # 添加 GitHub 远程地址
-    - git remote remove github || true
+    # 添加 GitHub 仓库作为远程仓库
     - git remote add github git@github.com:Camellia-shoplaza/test_repo.git
-    # 推送到 master 分支
-    - git push github HEAD:master --force
-  rules:
-    # 仅在 master 分支触发
-    - if: $CI_COMMIT_BRANCH == "master"
+    # 推送代码到 GitHub 仓库的主分支
+    - git push -u github HEAD:master
+  only:
+    - master  # 仅在 master 分支有代码推送时触发此任务
