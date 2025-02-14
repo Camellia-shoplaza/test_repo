@@ -35,7 +35,12 @@ push_to_github:
     - echo "开始拉取远程仓库最新代码"
     - |
       if ! git pull --rebase github master; then
-        echo "拉取代码并 rebase 失败，可能存在冲突，请手动解决"
+        echo "拉取代码并 rebase 失败，在 .gitlab-ci.yml 文件中发现合并冲突，请手动解决。"
+        echo "解决步骤如下："
+        echo "1. 在本地仓库中，编辑 .gitlab-ci.yml 文件，手动解决冲突。"
+        echo "2. 使用 'git add .gitlab-ci.yml' 标记冲突已解决。"
+        echo "3. 执行 'git rebase --continue' 继续变基操作。"
+        echo "4. 解决所有冲突后，提交修改并重新触发 CI 任务。"
         git rebase --abort
         exit 1
       fi
