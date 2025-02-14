@@ -4,26 +4,26 @@ stages:
 push_to_github:
   stage: push_to_github
   image: alpine:latest
-before_script:
-  # 安装 SSH 客户端、Git 以及 jq 用于解析 JSON 错误信息
-  - apk add --no-cache openssh git jq
-  # 创建 SSH 目录
-  - mkdir -p ~/.ssh
-  # 设置 SSH 私钥
-  - echo "$SSH_PRIVATE_KEY" > ~/.ssh/id_rsa
-  - chmod 600 ~/.ssh/id_rsa
-  # 添加 GitHub 的 SSH 指纹
-  - ssh-keyscan github.com >> ~/.ssh/known_hosts
-  # 配置 Git 用户信息
-  - git config --global user.email "lijiayang@shoplazza.com"
-  - git config --global user.name "Lijiayang"
-  # 测试 SSH 连接到 GitHub
-  - ssh -T git@github.com
-  - SSH_EXIT_CODE=$?
-  - if [ $SSH_EXIT_CODE -ne 0 ]; then
-      echo "SSH 连接到 GitHub 失败，请检查 SSH 密钥配置";
-      exit 1;
-    fi
+  before_script:
+    # 安装 SSH 客户端、Git 以及 jq 用于解析 JSON 错误信息
+    - apk add --no-cache openssh git jq
+    # 创建 SSH 目录
+    - mkdir -p ~/.ssh
+    # 设置 SSH 私钥
+    - echo "$SSH_PRIVATE_KEY" > ~/.ssh/id_rsa
+    - chmod 600 ~/.ssh/id_rsa
+    # 添加 GitHub 的 SSH 指纹
+    - ssh-keyscan github.com >> ~/.ssh/known_hosts
+    # 配置 Git 用户信息
+    - git config --global user.email "lijiayang@shoplazza.com"
+    - git config --global user.name "Lijiayang"
+    # 测试 SSH 连接到 GitHub
+    - ssh -T git@github.com
+    - SSH_EXIT_CODE=$?
+    - if [ $SSH_EXIT_CODE -ne 0 ]; then
+        echo "SSH 连接到 GitHub 失败，请检查 SSH 密钥配置";
+        exit 1;
+      fi
   script:
     # 添加 GitHub 仓库作为远程仓库
     - git remote add github git@github.com:Camellia-shoplaza/test_repo.git
