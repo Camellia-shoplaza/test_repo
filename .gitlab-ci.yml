@@ -13,7 +13,7 @@ push_to_github:
     - echo "github.com ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIOMqqnkVzrm0SdG6UOoqKLsabgH5C9okWi0dh2l9GKJl" > ~/.ssh/known_hosts
   script:
     # 添加 GitHub 仓库远程地址
-    - git remote add github git@github.com:git@github.com:Camellia-shoplaza/test_repo.git
+    - git remote add github git@github.com:Camellia-shoplaza/test_repo.git
     # 推送到 master 分支
     - git push github HEAD:master --force
   rules:
