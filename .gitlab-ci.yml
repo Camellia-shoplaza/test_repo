@@ -10,7 +10,7 @@ push_to_github:
     # 创建 SSH 目录
     - mkdir -p ~/.ssh
     # 设置 SSH 私钥
-    - echo "$GITHUB_PRIVATE_TOKEN" > ~/.ssh/id_rsa
+    - echo "$SSH_PRIVATE_KEY" > ~/.ssh/id_rsa
     - chmod 600 ~/.ssh/id_rsa
     # 添加 GitHub 的 SSH 指纹
     - ssh-keyscan github.com >> ~/.ssh/known_hosts
