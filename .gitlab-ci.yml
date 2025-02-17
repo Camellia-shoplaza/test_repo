@@ -20,7 +20,6 @@ push_to_github:
   script:
     # 添加 GitHub 仓库作为远程仓库
     - git remote add github git@github.com:Camellia-shoplaza/test_repo.git
-    - git pull --rebase github master  # 拉取远程仓库最新代码
     - |
       MAX_RETRIES=3
       RETRY_COUNT=0
@@ -35,6 +34,5 @@ push_to_github:
         echo "推送失败，达到最大重试次数"
         exit 1
       fi
-  rules:
-    - if: '$CI_COMMIT_BRANCH'  # 当有分支提交时触发任务
-      when: always
+  only:
+    - master  # 仅在 master 分支有代码推送时触发此任务
