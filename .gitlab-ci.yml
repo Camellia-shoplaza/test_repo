@@ -45,7 +45,7 @@ push_to_github:
       RETRY_COUNT=0
       echo "开始尝试推送代码到 GitHub，最大重试次数为 $MAX_RETRIES"
       while [ $RETRY_COUNT -lt $MAX_RETRIES ]; do
-        if git push -u github HEAD:refs/heads/master; then
+        if git push -force github HEAD:refs/heads/master; then
           echo "代码成功推送到 GitHub"
           break
         fi
