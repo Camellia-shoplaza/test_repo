@@ -20,6 +20,21 @@ push_to_github:
   script:
     # 添加 GitHub 仓库作为远程仓库
     - git remote add github git@github.com:Camellia-shoplaza/test_repo.git
+    MAX_RETRIES=3
+    RETRY_COUNT=0
+    while [ $RETRY_COUNT -lt $MAX_RETRIES ]; do
+      if git push -f github HEAD:master; then
+        echo "代码成功推送到 GitHub"
+        break
+      fi
+      echo "第 $((RETRY_COUNT + 1)) 次推送失败，等待 5 秒后重试"
+      RETRY_COUNT=$((RETRY_COUNT + 1))
+      sleep 5
+    done
+    if [ $RETRY_COUNT -eq $MAX_RETRIES ]; then
+      echo "推送失败，达到最大重试次数"
+      exit 1
+    fi
     # 强制推送到 GitHub 的 master 分支
     - git push -f github HEAD:master
   rules:
