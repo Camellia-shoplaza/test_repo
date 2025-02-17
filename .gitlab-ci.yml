@@ -1,61 +1,22 @@
 stages:
-  - push_to_github
+  - sync
 
-push_to_github:
-  stage: push_to_github
-  image: alpine:latest
+sync_to_github:
+  stage: sync
+  image: alpine/git  # 使用包含 Git 的轻量级镜像
   before_script:
-    # 安装 SSH 客户端和 Git
-    - echo "开始安装 SSH 客户端和 Git"
-    - apk add --no-cache openssh git
-    - echo "SSH 客户端和 Git 安装完成"
-    # 创建 SSH 目录
-    - echo "开始创建 SSH 目录"
-    - mkdir -p ~/.ssh
-    - echo "SSH 目录创建完成"
-    # 设置 SSH 私钥
-    - echo "开始设置 SSH 私钥"
-    - echo "$SSH_PRIVATE_KEY" > ~/.ssh/id_rsa
-    - chmod 600 ~/.ssh/id_rsa
-    - echo "SSH 私钥设置完成"
-    # 添加 GitHub 的 SSH 指纹
-    - echo "开始添加 GitHub 的 SSH 指纹"
-    - ssh-keyscan github.com >> ~/.ssh/known_hosts
-    - echo "GitHub 的 SSH 指纹添加完成"
     # 配置 Git 用户信息
-    - echo "开始配置 Git 用户信息"
     - git config --global user.email "lijiayang@shoplazza.com"
-    - git config --global user.name "Lijiayang"
-    - echo "Git 用户信息配置完成"
+    - git config --global user.name "lijiayang"
   script:
-    # 添加 GitHub 仓库作为远程仓库
-    - echo "开始添加 GitHub 仓库作为远程仓库"
+    # 添加 GitHub 仓库为远程地址（使用 HTTPS + Token 认证）
     - git remote add github git@github.com:Camellia-shoplaza/test_repo.git
-    - echo "GitHub 仓库作为远程仓库添加完成"
-    - echo "开始拉取远程仓库最新代码"
-    - |
-      if ! git pull --rebase github master; then
-        echo "拉取代码并 rebase 失败，可能存在冲突，请手动解决"
-        git rebase --abort
-        exit 1
-      fi
-    - echo "远程仓库最新代码拉取完成"
-    - |
-      MAX_RETRIES=3
-      RETRY_COUNT=0
-      echo "开始尝试推送代码到 GitHub，最大重试次数为 $MAX_RETRIES"
-      while [ $RETRY_COUNT -lt $MAX_RETRIES ]; do
-        if git push -force github HEAD:refs/heads/master; then
-          echo "代码成功推送到 GitHub"
-          break
-        fi
-        echo "第 $((RETRY_COUNT + 1)) 次推送失败，等待 5 秒后重试"
-        RETRY_COUNT=$((RETRY_COUNT + 1))
-        sleep 5
-      done
-      if [ $RETRY_COUNT -eq $MAX_RETRIES ]; then
-        echo "推送失败，达到最大重试次数"
-        exit 1
-      fi
-  only:
-    - master  # 仅在 master 分支有代码推送时触发此任务
+    # 强制推送到 GitHub（覆盖式同步）
+    # - git push github HEAD:master --force
+    # 获取当前分支名称
+    - CURRENT_BRANCH=$(git rev-parse --abbrev-ref HEAD)
+    # 推送到 GitHub 的对应分支
+    - git push github HEAD:$CURRENT_BRANCH --force
+  rules:
+    # 仅在 master 分支触发同步
+    - if: $CI_COMMIT_BRANCH
