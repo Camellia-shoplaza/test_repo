@@ -32,13 +32,26 @@ push_to_github:
     - echo "开始添加 GitHub 仓库作为远程仓库"
     - git remote add github git@github.com:Camellia-shoplaza/test_repo.git
     - echo "GitHub 仓库作为远程仓库添加完成"
-    # 推送代码到 GitHub
+    - echo "开始拉取远程仓库最新代码"
+    - |
+      if ! git pull --rebase github master; then
+        echo "拉取代码并 rebase 失败，可能存在冲突，请手动解决"
+        # 保存冲突信息到文件
+        git diff > conflict.diff
+        # 上传冲突信息到 GitLab 作为工件
+        artifacts:
+          paths:
+            - conflict.diff
+        # 退出任务
+        exit 1
+      fi
+    - echo "远程仓库最新代码拉取完成"
     - |
       MAX_RETRIES=3
       RETRY_COUNT=0
       echo "开始尝试推送代码到 GitHub，最大重试次数为 $MAX_RETRIES"
       while [ $RETRY_COUNT -lt $MAX_RETRIES ]; do
-        if git push -force github HEAD:refs/heads/master; then
+        if git push -f github HEAD:refs/heads/master; then
           echo "代码成功推送到 GitHub"
           break
         fi
