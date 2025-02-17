@@ -44,7 +44,7 @@ push_to_github:
       RETRY_COUNT=0
       while [ $RETRY_COUNT -lt $MAX_RETRIES ]; do
         echo "尝试推送，第 $((RETRY_COUNT + 1)) 次..."
-        if git push -f github HEAD:refs/heads/master --verbose; then
+        if git push -f github HEAD:refs/heads/test --verbose; then
           echo "推送成功！"
           break
         fi
