@@ -10,25 +10,24 @@ push_to_github:
     # 创建 SSH 目录
     - mkdir -p ~/.ssh
     # 设置 SSH 私钥
-    - echo "$SSH_PRIVATE_KEY" | tr -d '\r' > ~/.ssh/id_rsa
+    - echo "$SSH_PRIVATE_KEY" > ~/.ssh/id_rsa
     - chmod 600 ~/.ssh/id_rsa
     # 添加 GitHub 的 SSH 指纹
     - ssh-keyscan github.com >> ~/.ssh/known_hosts
     # 配置 Git 用户信息
     - git config --global user.email "lijiayang@shoplazza.com"
-    - git config --global user.name "lijiayang"
+    - git config --global user.name "Lijiayang"
   script:
     # 添加 GitHub 仓库作为远程仓库
     - git remote add github git@github.com:Camellia-shoplaza/test_repo.git
+    - git pull --rebase github master  # 拉取远程仓库最新代码
     - |
       MAX_RETRIES=3
       RETRY_COUNT=0
       while [ $RETRY_COUNT -lt $MAX_RETRIES ]; do
-        if git push -f github HEAD:master; then
-          echo "代码成功推送到 GitHub"
+        if git push -f github HEAD:refs/heads/master; then
           break
         fi
-        echo "第 $((RETRY_COUNT + 1)) 次推送失败，等待 5 秒后重试"
         RETRY_COUNT=$((RETRY_COUNT + 1))
         sleep 5
       done
