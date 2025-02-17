@@ -1,0 +1,80 @@
+<div class="container section-page">
+  <div class="container-inner">
+    <div class="row clearfix">
+      <div class="column column--sm-8">
+        {{breadcrumbs}}
+      </div>
+      <div class="column column--sm-4">
+        {{!-- {{search class='search-box--small' submit=false placeholder=settings.search_placeholder}} --}}
+             <div class="custom_section_search_input_form"></div>
+      </div>
+    </div>
+  <script type="text/javascript">
+                var language = LotusUtils.getLocale();
+
+var hiddenSearchQueryDom = document.querySelector("#hidden_query")
+var searchparams =  hiddenSearchQueryDom ?.innerText
+  document.addEventListener('DOMContentLoaded', function() {
+    // 获取搜索框元素
+    var custom_section_search_input_form = document.getElementsByClassName('custom_section_search_input_form')[0];
+    var html = `<form role="search" class="search-box--small" data-search="" data-instant="true" autocomplete="off" action="/hc/${language}/search" accept-charset="UTF-8" method="get">`
+    html+=`
+     <input name="utf8" type="hidden" value="✓" autocomplete="off">
+     <input name="filter_by" type="hidden" value="knowledge_base" autocomplete="off">
+     <input type="search" name="query" id="query" value="${searchparams?searchparams:''}" placeholder="${language == 'zh-cn' ? '请输入您的问题...' : 'Type your question here...' }" autocomplete="off" aria-label="search_placeholder">
+    `
+    html+='</form>'
+    custom_section_search_input_form.innerHTML= html
+  });
+      </script>
+
+<!--     <div class="page-header page-header--center" id="main-content">
+      <div class="section-header">
+        <div class="section-header__col section-header__col--main">
+          <h1>
+            {{section.name}}
+          </h1>
+
+          {{#if section.description}}
+          <p class="page-description">{{section.description}}</p>
+          {{/if}}
+        </div>
+        {{#if settings.show_follow_section}}
+          <div class="section-header__col section-header__col--button section-subscribe">
+            {{subscribe}}
+          </div>
+        {{/if}}
+      </div>
+    </div>
+
+    {{#if section.sections}}
+      <div class="section-list-wrapper">
+        <ul class="row section-list">
+          {{#each section.sections}}
+            <li class="column column column--sm-6  section-list-item">
+              <a class="section-list-item__link" href="{{url}}">
+                <h2 class="h5 section-list-item__title">{{name}}</h2>
+                <p class="meta">{{description}}</p>
+              </a>
+            </li>
+          {{/each}}
+        </ul>
+        {{pagination "section.sections"}}
+      </div>
+    {{/if}}
+
+    {{#if section.articles}}
+      <ul class="article-list article-list--section">
+        {{#each section.articles}}
+          <li class="article-list-item" >
+            <a class="article-list-item__link" href="{{url}}">{{title}}</a>
+          </li>
+        {{/each}}
+      </ul>
+    {{else}}
+      <p><i><a href="{{section.url}}">{{t 'empty'}}</a></i></p>
+    {{/if}}
+
+    {{pagination "section.articles"}}
+  </div>
+</div> -->

@@ -1,0 +1,847 @@
+<div class="help_center_chat_gpt">
+    <div class="chat_gpt_header">
+        <div class="chat_gpt_header_title ">
+            Shoplazza Help Center
+        </div>
+        <div class="chat_gpt_header_version">
+            Based on OpenAI API (gpt-3.5-turbo).
+        </div>
+    </div>
+    <div class="openMoreContent">
+        <div class="openMoreLineLeft"></div>
+        <div class="openMoreBtn">
+            <div class="openMoreBtnText">查看历史会话</div>
+            <div class="openMoreBtnIcon">
+                <svg xmlns="http://www.w3.org/2000/svg" width="9" height="6" viewBox="0 0 9 6" fill="none">
+                    <path d="M1.07132 0.572266C0.666856 0.572266 0.30222 0.815908 0.147439 1.18958C-0.00734223 1.56326 0.0782135 1.99337 0.364211 2.27937L3.79278 5.70794C4.18331 6.09847 4.81647 6.09847 5.207 5.70794L8.63557 2.27937C8.92157 1.99337 9.00712 1.56326 8.85234 1.18958C8.69756 0.815908 8.33292 0.572266 7.92846 0.572266H1.07132Z" fill="#6E6E6E"/>
+                </svg>
+            </div>
+        </div>
+        <div class="openMoreLineRight"></div>
+    </div>
+    <div class="chat_gpt_content">
+		<div class="oldChatRequest " style="display: none;"></div>
+    </div>
+
+    <div class="chat_gpt_customer_btn">
+            人工客服
+        </div>
+    <div class="chat_gpt_search">
+        
+        <div class="chat_gpt_input_content">
+            <input type="text" class="chat_gpt_input" placeholder="Enter something…">
+            <div class="chat_gpt_send_btn">
+                <span class="chat_gpt_send_text">Send</span>
+                <span class="chat_gpt_send_icon"></span>
+            </div>
+        </div>
+        <div class="chat_gpt_clear_btn">
+            <img src="https://assets.shoplazza.com/oss/operation/b2f06ff75e3a1eefcf836f769ac8b62c.png" alt="">
+        </div>
+    </div>
+</div>
+<script>
+     var language = LotusUtils.getLocale();
+    $('body').on('click', '.unLikePostionRegBtn', function(e) {
+        var element = e.target; 
+        element.style.background = '#E7F0FF'
+        element.style.borderColor = '#4669BE'
+        var siblings = Array.from(element.parentNode.childNodes).filter(function(node) {
+            return node.nodeType === 1 && node !== element;
+        });
+        siblings[0].style.background = '#fff'
+		element.parentElement.setAttribute('active','yes')
+    });
+    $('body').on('click', '.unLikePostionRejBtn', function(e) {
+        var element = e.target; 
+        element.style.background = '#E7F0FF'
+        element.style.borderColor = '#4669BE'
+        var siblings = Array.from(element.parentNode.childNodes).filter(function(node) {
+            return node.nodeType === 1 && node !== element;
+        });
+		element.parentElement.setAttribute('active','no')
+        siblings[0].style.background = '#fff'
+    });
+    
+    $('body').on('click', '.unLikePostionSubmitBtn', function(e) {
+        var element = e.target; 
+        while (element) {
+        if (element.classList.contains('unLikePosition')) {
+            break;
+        }
+        element = element.parentNode;
+        }
+		var divElement = document.createElement('div');
+		divElement.style.display = 'flex'
+		divElement.style.justifyContent = 'end'
+		divElement.style.color = '#000'
+		divElement.style.fontSize = '14px'
+		divElement.style.fontWeight = '400'
+		divElement.style.marginTop = '8px'
+		divElement.innerHTML = language == 'zh-cn'?'感谢您的反馈':'Thanks for your feedback!'
+		var elementParent = element.parentNode
+		elementParent.parentNode.insertBefore(divElement, elementParent.nextSibling)
+        element.style.display = 'none';
+        console.log(elementParent)
+        elementParent.parentNode.getElementsByClassName('likeAndDislikeContent')[0].style.display = 'none'
+        const question_type =  element.getElementsByClassName('unLikePostionSubmit')[0].parentElement.getElementsByClassName('unLikePostionBtnList')[0].getAttribute('active')
+        const note =  document.getElementsByClassName('unLikePostionSubmit')[0].parentElement.getElementsByClassName('myTextarea')[0].value
+        sa.track('aigc_feedback', {value_type:'no',question_type:question_type,note:note,time:new Date().getTime()});
+    });
+    $('body').on('click', '.ChatLikeBtn', function(e) {
+        var element = e.target; 
+        while (element) {
+        if (element.classList.contains('likeAndDislike')) {
+            break;
+        }
+        element = element.parentNode;
+        element.style.display = 'none';
+        }
+		var divElement = document.createElement('div');
+		divElement.style.display = 'flex'
+		divElement.style.justifyContent = 'end'
+		divElement.style.color = '#000'
+		divElement.style.fontSize = '14px'
+		divElement.style.fontWeight = '400'
+		divElement.style.marginTop = '8px'
+		divElement.innerHTML = language == 'zh-cn'?'感谢您的反馈':'Thanks for your feedback!'
+		var elementParent = element.parentNode
+		elementParent.parentNode.insertBefore(divElement, elementParent)
+        e.currentTarget.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+  <path fill-rule="evenodd" clip-rule="evenodd" d="M10.639 4.39735C10.7776 4.12016 11.0609 3.94507 11.3708 3.94507C12.2555 3.94507 13.1039 4.29651 13.7295 4.92208C14.3551 5.54765 14.7065 6.3961 14.7065 7.28079V8.35076H18.9234C19.218 8.35084 19.5095 8.4136 19.778 8.53488C20.0465 8.65615 20.2861 8.83316 20.481 9.05415C20.6758 9.27515 20.8214 9.53507 20.9081 9.81664C20.9947 10.098 21.0205 10.3945 20.9838 10.6865M20.9838 10.6865L20.0397 18.2391C19.9765 18.741 19.7323 19.2032 19.353 19.5378C18.9737 19.8724 18.4853 20.0571 17.9796 20.0573H4.44757C4.06365 20.0573 3.69545 19.9048 3.42398 19.6333C3.15251 19.3618 3 18.9936 3 18.6097V11.6865C3 11.3026 3.15251 10.9344 3.42398 10.6629C3.69545 10.3914 4.06365 10.2389 4.44757 10.2389H7.71821L10.639 4.39735M7.40569 11.8753V18.4209H4.63636V11.8753H7.40569Z" fill="#0E0E0E"/>
+</svg>`
+                sa.track('aigc_valuation', {value_type:'yes',time:new Date().getTime()});
+    });
+
+    $('body').on('click', '.ChatUnLikeBtn', function(e) {
+        var element = e.target; 
+        var element1= element
+        var element2= element
+        while (element1) {
+        if (element1.classList.contains('likeAndDislike')) {
+            break;
+        }
+        element1 = element1.parentNode;
+        }
+        element1.style.pointerEvents = 'none';
+        while (element2) {
+        if (element2.classList.contains('chat_request')) {
+            break;
+        }
+        element2 = element2.parentNode;
+        }
+        element2.getElementsByClassName('unLikePosition')[0].style.display = 'block'
+        e.currentTarget.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+  <path fill-rule="evenodd" clip-rule="evenodd" d="M10.639 19.6027C10.7776 19.8798 11.0609 20.0549 11.3708 20.0549C12.2555 20.0549 13.1039 19.7035 13.7295 19.0779C14.3551 18.4524 14.7065 17.6039 14.7065 16.7192V15.6492H18.9234C19.218 15.6492 19.5095 15.5864 19.778 15.4651C20.0465 15.3438 20.2861 15.1668 20.481 14.9458C20.6758 14.7249 20.8214 14.4649 20.9081 14.1834C20.9947 13.902 21.0205 13.6055 20.9838 13.3135M20.9838 13.3135L20.0397 5.76085C19.9765 5.25904 19.7323 4.79676 19.353 4.46216C18.9737 4.12757 18.4853 3.94287 17.9796 3.94273H4.44757C4.06365 3.94273 3.69545 4.09524 3.42398 4.36671C3.15251 4.63818 3 5.00638 3 5.3903V12.3135C3 12.6974 3.15251 13.0656 3.42398 13.3371C3.69545 13.6086 4.06365 13.7611 4.44757 13.7611H7.71821L10.639 19.6027M7.40569 12.1247V5.57909H4.63636V12.1247H7.40569Z" fill="#0E0E0E"/>
+</svg>`
+        sa.track('aigc_valuation', {value_type:'no',time:new Date().getTime()});;
+    });
+    $(document).ready(function() {
+        // 在这里编写你的代码，它将在页面加载完成后立即触发
+        // 设置localStorage
+         
+          if(language == 'zh-cn') {
+            document.getElementsByClassName('openMoreBtnText')[0].innerHTML = '查看历史会话'
+            document.getElementsByClassName('chat_gpt_customer_btn')[0].innerHTML = '人工客服'
+            
+          }else {
+            document.getElementsByClassName('openMoreBtnText')[0].innerHTML = 'View History Sessions'
+            document.getElementsByClassName('chat_gpt_customer_btn')[0].innerHTML = 'Live chat'
+          }
+        const saHelpCenterData = JSON.parse(localStorage.getItem("saHelpCenter"));
+        saHelpCenterData.isAigcCustomerService = false
+        saHelpCenterData.isActionChangeChatPage = false
+		var setrtChatGptTime = saHelpCenterData.setrtChatGptTime
+        localStorage.setItem("saHelpCenter", JSON.stringify(saHelpCenterData));
+		if(saHelpCenterData.ChatGptOptions!=='stop' && !isNaN(saHelpCenterData.ChatGptOptions)){
+		setTimeout(()=>{
+				const saHelpCenterData = JSON.parse(localStorage.getItem("saHelpCenter"));
+				var ChatGptOptions = saHelpCenterData.ChatGptOptions
+				if(ChatGptOptions!=='stop' && !isNaN(ChatGptOptions)) {
+						sa.track('aigc_enquiries', {frequency:ChatGptOptions,start_time:setrtChatGptTime,end_time:new Date().getTime(),time:new Date().getTime()});
+						saHelpCenterData.ChatGptOptions = 'stop'
+					}
+			},30*60*1000)
+	}
+    });
+    {{!-- 埋点 --}}
+    setTimeout(()=>{
+            sa.track('aigc_chatgpt_pv', {time:new Date().getTime()});
+    },2000)
+        {{!-- 获取帮助中心历史的问题以及答案 --}}
+    var isSearchChat = false
+    var shopChatOptions = false
+	 var chat_gpt_content_obj = JSON.parse(localStorage.getItem('chat_local_questions'))
+     console.log('chat_gpt_content_obj',chat_gpt_content_obj)
+     if(!chat_gpt_content_obj) {
+        document.getElementsByClassName('openMoreContent')[0].style.display = 'none'
+     }
+        if(!shopChatOptions) {
+    if (chat_gpt_content_obj) {
+        chat_gpt_content_obj.forEach((item, index) => {
+            if (item.ruler == 'chat_gpt_role') {
+                $('.oldChatRequest').append(`<div class="chat_request">
+                    <div class="chat_request_body">
+                            <div class="chat_request_content">
+                                <div class="chat_request_content_header">
+                                    <div class="chat_request_icon"><img
+                                    src="https://assets.shoplazza.com/oss/operation/39c55fa6734c7ca2d5bd3bbf91bbdc90.png" alt="">
+                                    </div>
+                                    <div class="chat_request_info">
+                                        <span class="chat_request_msg">${decodeURIComponent(item.info)}</span>
+                                    </div>
+                                </div>
+                                
+                                </div>
+                                <div class="unLikePosition" style="display: none;">
+                                    <div class="unLikePostionBtnList">
+                                        <div class="unLikePostionRegBtn">${language == 'zh-cn'?'问题已解决':'Problem solved'}</div>
+                                        <div class="unLikePostionRejBtn">${language == 'zh-cn'?'问题未解决':'Problem not solved'}</div>
+                                    </div>
+                                    <div class="unLikePostionText">
+                                        <textarea class="myTextarea" id="myTextarea" style="color: #000;" rows="4" cols="50" placeholder =" ${language == 'zh-cn'?'留言建议':'Message suggestions'}"></textarea>
+                                    </div>
+                                    <div class="unLikePostionTextLine"></div>
+                                    <div class="unLikePostionSubmit">
+                                        <div class="unLikePostionSubmitBtn">${language == 'zh-cn'?'提交':'Submit'}</div>
+                                    </div>
+                                </div>
+                    </div>
+  
+  <div class="likeAndDislikeContent">
+    <div class="likeAndDislike">
+        <span class="ChatLikeBtn UPLike">
+            <svg class="UPLike" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
+                <path fill-rule="evenodd" clip-rule="evenodd" d="M8.86582 3.6645C8.98132 3.43351 9.21741 3.2876 9.47566 3.2876C10.2129 3.2876 10.9199 3.58046 11.4413 4.10177C11.9626 4.62308 12.2554 5.33012 12.2554 6.06736V6.95901H15.7695C16.015 6.95908 16.2579 7.01138 16.4817 7.11244C16.7054 7.2135 16.9051 7.36101 17.0675 7.54517C17.2298 7.72933 17.3512 7.94593 17.4234 8.18058C17.4956 8.41501 17.5171 8.66211 17.4865 8.90549M17.4865 8.90549L16.6998 15.1993C16.6471 15.6175 16.4435 16.0027 16.1275 16.2816C15.8114 16.5604 15.4044 16.7143 14.983 16.7144H3.70631C3.38637 16.7144 3.07955 16.5873 2.85332 16.3611C2.62709 16.1349 2.5 15.8281 2.5 15.5081V9.73877C2.5 9.41884 2.62709 9.11201 2.85332 8.88579C3.07954 8.65956 3.38637 8.53247 3.70631 8.53247H6.43184L8.86582 3.6645M6.17141 9.8961V15.3508H3.86364V9.8961H6.17141Z" fill="#8E8E8E"/>
+            </svg>
+        </span>
+        <span class="ChatUnLikeBtn DOWNLike">
+            <svg class="DOWNLike" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
+                <path fill-rule="evenodd" clip-rule="evenodd" d="M8.86582 16.3355C8.98132 16.5665 9.21741 16.7124 9.47566 16.7124C10.2129 16.7124 10.9199 16.4195 11.4413 15.8982C11.9626 15.3769 12.2554 14.6699 12.2554 13.9326V13.041H15.7695C16.015 13.0409 16.2579 12.9886 16.4817 12.8876C16.7054 12.7865 16.9051 12.639 17.0675 12.4548C17.2298 12.2707 17.3512 12.0541 17.4234 11.8194C17.4956 11.585 17.5171 11.3379 17.4865 11.0945M17.4865 11.0945L16.6998 4.80067C16.6471 4.38249 16.4435 3.99726 16.1275 3.71843C15.8114 3.4396 15.4044 3.28569 14.983 3.28557H3.70631C3.38637 3.28557 3.07955 3.41266 2.85332 3.63888C2.62709 3.86511 2.5 4.17194 2.5 4.49187V10.2612C2.5 10.5812 2.62709 10.888 2.85332 11.1142C3.07954 11.3404 3.38637 11.4675 3.70631 11.4675H6.43184L8.86582 16.3355M6.17141 10.1039V4.6492H3.86364V10.1039H6.17141Z" fill="#8E8E8E"/>
+            </svg>
+        </span>
+    </div>
+  </div>
+  
+</div>`)
+            } else if (item.ruler == 'admin_role') {
+                $('.oldChatRequest').append(`<div class="chat_response">
+  <div class="chat_response_icon"></div>
+  <span class="chat_response_msg">${item.info}</span>
+</div>`)
+            }
+        })
+    }
+    shopChatOptions = true
+        }
+
+    document.getElementsByClassName('openMoreBtn')[0].addEventListener('click',()=>{
+        document.getElementsByClassName('openMoreBtn')[0].style.display = 'none'
+		document.getElementsByClassName('oldChatRequest')[0].style.display = 'block'
+       
+    })
+    var test = function (item) {
+        if (isSearchChat) return
+            var hiddenSearchQueryDom = document.getElementsByClassName("chat_gpt_input")[0]
+            var searchparams =  item?item:hiddenSearchQueryDom?.value
+            if (searchparams) {
+                hiddenSearchQueryDom.value = ''
+                let chat_str = ''
+                $('.last_foot_response_btn').last().remove()
+                var language = LotusUtils.getLocale();
+                var source = new EventSource(`https://langouste.shoplazza.com/api/langouste/gpt/stream/message?prompt=${searchparams}&locale=${language}`);
+                isSearchChat = true
+                var chat_gpt_content_obj = JSON.parse(localStorage.getItem('chat_local_questions'))
+                if (chat_gpt_content_obj) {
+                    chat_gpt_content_obj.push({
+                        ruler: 'admin_role',
+                        info: searchparams
+                    })
+                } else {
+                    chat_gpt_content_obj = []
+                    chat_gpt_content_obj.push({
+                        ruler: 'admin_role',
+                        info: searchparams
+                    })
+                }
+                localStorage.setItem('chat_local_questions', JSON.stringify(chat_gpt_content_obj));
+                $('.chat_gpt_content').append(`<div class="chat_response">
+    <div class="chat_response_icon"></div>
+    <span class="chat_response_msg">${searchparams}</span>
+  </div>`)
+                $('.chat_gpt_content').append(`<div class="chat_request">
+                    <div class="chat_request_body">
+                        <div class="chat_request_content">
+                            <div class="chat_request_content_header">
+                                <div class="chat_request_icon"><img
+                                    src="https://assets.shoplazza.com/oss/operation/39c55fa6734c7ca2d5bd3bbf91bbdc90.png" alt="">
+                                </div>
+                                <div class="chat_request_info">
+                                    <span class="chat_request_msg"></span>
+                                    <div class="loding_request">
+                                        <span class="loding_request_text">AI is thinking…</span>
+                                        <span class="loding_request_btn">Stop</span>
+                                    </div>
+                                </div>
+                            </div>
+                        
+                    </div>
+                    <div class="unLikePosition" style="display: none;">
+                            <div class="unLikePostionBtnList">
+                                <div class="unLikePostionRegBtn">${language == 'zh-cn'?'问题已解决':'Problem solved'}</div>
+                                <div class="unLikePostionRejBtn">${language == 'zh-cn'?'问题未解决':'Problem not solved'}</div>
+                            </div>
+                            <div class="unLikePostionText">
+                                <textarea class="myTextarea" id="myTextarea" style="color: #000;" rows="4" cols="50" placeholder='${language == "zh-cn"?"留言建议":"Message suggestions"}'></textarea>
+                            </div>
+                            <div class="unLikePostionTextLine"></div>
+                            <div class="unLikePostionSubmit">
+                                <div class="unLikePostionSubmitBtn">${language == 'zh-cn'?'提交':'Submit'}</div>
+                            </div>
+                        </div>
+                </div>
+                <div class="likeAndDislikeContent">
+                        <div class="likeAndDislike">
+                            <span class="ChatLikeBtn UPLike">
+                                <svg class="UPLike" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
+                                    <path fill-rule="evenodd" clip-rule="evenodd" d="M8.86582 3.6645C8.98132 3.43351 9.21741 3.2876 9.47566 3.2876C10.2129 3.2876 10.9199 3.58046 11.4413 4.10177C11.9626 4.62308 12.2554 5.33012 12.2554 6.06736V6.95901H15.7695C16.015 6.95908 16.2579 7.01138 16.4817 7.11244C16.7054 7.2135 16.9051 7.36101 17.0675 7.54517C17.2298 7.72933 17.3512 7.94593 17.4234 8.18058C17.4956 8.41501 17.5171 8.66211 17.4865 8.90549M17.4865 8.90549L16.6998 15.1993C16.6471 15.6175 16.4435 16.0027 16.1275 16.2816C15.8114 16.5604 15.4044 16.7143 14.983 16.7144H3.70631C3.38637 16.7144 3.07955 16.5873 2.85332 16.3611C2.62709 16.1349 2.5 15.8281 2.5 15.5081V9.73877C2.5 9.41884 2.62709 9.11201 2.85332 8.88579C3.07954 8.65956 3.38637 8.53247 3.70631 8.53247H6.43184L8.86582 3.6645M6.17141 9.8961V15.3508H3.86364V9.8961H6.17141Z" fill="#8E8E8E"/>
+                                </svg>
+                            </span>
+                            <span class="ChatUnLikeBtn DOWNLike">
+                                <svg class="DOWNLike" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
+                                    <path fill-rule="evenodd" clip-rule="evenodd" d="M8.86582 16.3355C8.98132 16.5665 9.21741 16.7124 9.47566 16.7124C10.2129 16.7124 10.9199 16.4195 11.4413 15.8982C11.9626 15.3769 12.2554 14.6699 12.2554 13.9326V13.041H15.7695C16.015 13.0409 16.2579 12.9886 16.4817 12.8876C16.7054 12.7865 16.9051 12.639 17.0675 12.4548C17.2298 12.2707 17.3512 12.0541 17.4234 11.8194C17.4956 11.585 17.5171 11.3379 17.4865 11.0945M17.4865 11.0945L16.6998 4.80067C16.6471 4.38249 16.4435 3.99726 16.1275 3.71843C15.8114 3.4396 15.4044 3.28569 14.983 3.28557H3.70631C3.38637 3.28557 3.07955 3.41266 2.85332 3.63888C2.62709 3.86511 2.5 4.17194 2.5 4.49187V10.2612C2.5 10.5812 2.62709 10.888 2.85332 11.1142C3.07954 11.3404 3.38637 11.4675 3.70631 11.4675H6.43184L8.86582 16.3355M6.17141 10.1039V4.6492H3.86364V10.1039H6.17141Z" fill="#8E8E8E"/>
+                                </svg>
+                            </span>
+                        </div>
+                    </div>
+  </div>`)
+                document.getElementsByClassName('loding_request_btn')[0].addEventListener('click', function () {
+                        source.close()
+                        isSearchChat = false
+                    if (chat_gpt_content_obj) {
+                        chat_gpt_content_obj.push({
+                            ruler: 'chat_gpt_role',
+                            info: chat_str
+                        })
+                    } else {
+                        chat_gpt_content_obj = []
+                        chat_gpt_content_obj.push({
+                            ruler: 'chat_gpt_role',
+                            info: chat_str
+                        })
+                    }
+                    $('.loding_request').last().remove()
+                    $('.chat_request_info').last().append(`<div class="last_foot_review_btn">
+          <div class="last_foot_response_btn">
+          <img src="https://assets.shoplazza.com/oss/operation/6ba1a7d121feffb65369b8eff30d8ca0.png" alt="">
+          Regenerate
+        </div>`)
+                    document.getElementsByClassName('last_foot_response_btn')[0].addEventListener('click', function () {
+                        test(searchparams)
+                })
+                    localStorage.setItem('chat_local_questions', JSON.stringify(chat_gpt_content_obj));
+                })
+                source.onmessage = function (event) {
+                    var data = event.data // 将返回的数据解析为JSON格式
+                    if (data == '!!!') {
+                        source.close(); // 关闭连接
+                        isSearchChat = false
+                        if (chat_gpt_content_obj) {
+                            chat_gpt_content_obj.push({
+                                ruler: 'chat_gpt_role',
+                                info: chat_str
+                            })
+                        } else {
+                            chat_gpt_content_obj = []
+                            chat_gpt_content_obj.push({
+                                ruler: 'chat_gpt_role',
+                                info: chat_str
+                            })
+                        }
+                        $('.loding_request').last().remove()
+                        $('.chat_request_info').last().append(`<div class="last_foot_review_btn">
+          <div class="last_foot_response_btn">
+          <img src="https://assets.shoplazza.com/oss/operation/6ba1a7d121feffb65369b8eff30d8ca0.png" alt="">
+          Regenerate
+        </div>`)
+                document.getElementsByClassName('last_foot_response_btn')[0].addEventListener('click', function () {
+                test(searchparams)
+                })
+                        localStorage.setItem('chat_local_questions', JSON.stringify(chat_gpt_content_obj));
+                    } else {
+                        chat_str += data
+                        // 将数据展示到HTML上
+                        $('.chat_request_msg').last().append('<span>' + decodeURIComponent(data) + '</span>');
+                    }
+                };
+            }
+    }
+        document.getElementsByClassName("chat_gpt_send_btn")[0].addEventListener("click", function () {
+            var searchValue = document.getElementsByClassName("chat_gpt_input")[0].value
+
+            if(searchValue) {
+                if (isSearchChat) return
+                test()
+                const saHelpCenterData = JSON.parse(localStorage.getItem("saHelpCenter"));
+                if(saHelpCenterData.ChatGptOptions!=='stop' && !isNaN(saHelpCenterData.ChatGptOptions)){
+                    saHelpCenterData.ChatGptOptions +=1 
+                }
+                localStorage.setItem("saHelpCenter", JSON.stringify({...saHelpCenterData,isAigcCustomerService:true,isActionChangeChatPage:true}));
+                sa.track('aigc_send_user', {time:new Date().getTime(),content:searchValue});
+                }
+        });
+    document.getElementsByClassName('chat_gpt_clear_btn')[0].addEventListener('click', function () {
+            const saHelpCenterData = JSON.parse(localStorage.getItem("saHelpCenter"));
+            localStorage.setItem("saHelpCenter", JSON.stringify({...saHelpCenterData,isAigcCustomerService:true,isActionChangeChatPage:true}));
+        if (isSearchChat) return
+        localStorage.removeItem('chat_local_questions');
+        $('.chat_gpt_content').text('')
+    })
+    {{!-- 点击人工客服 --}}
+    document.getElementsByClassName('chat_gpt_customer_btn')[0].addEventListener('click', function () {
+       var language = LotusUtils.getLocale();
+          if(language == 'zh-cn') {
+            ysf('open')
+          }else {
+            zE('messenger', 'open')
+          }
+        // 读取localStorage
+        const saHelpCenterData = JSON.parse(localStorage.getItem("saHelpCenter"));
+		var ChatGptOptions = saHelpCenterData.ChatGptOptions
+		var setrtChatGptTime = saHelpCenterData.setrtChatGptTime
+        var isAigcCustomerService = saHelpCenterData.isAigcCustomerService;
+        if(!isAigcCustomerService) {
+            sa.track('aigc_customer_service', {time:new Date().getTime()});
+            const oldsaHelpCenterData = {...saHelpCenterData,isAigcCustomerService:true,isActionChangeChatPage:true};
+
+            localStorage.setItem("saHelpCenter", JSON.stringify(oldsaHelpCenterData));
+        }
+		if(ChatGptOptions!=='stop' && !isNaN(ChatGptOptions)) {
+				 sa.track('aigc_enquiries', {time:new Date().getTime(),frequency:ChatGptOptions,start_time:setrtChatGptTime,end_time:new Date().getTime()});
+				 saHelpCenterData.ChatGptOptions = 'stop'
+                 const oldsaHelpCenterData = {...saHelpCenterData,isAigcCustomerService:true,isActionChangeChatPage:true};
+                localStorage.setItem("saHelpCenter", JSON.stringify(oldsaHelpCenterData));
+			}
+    })
+      window.onbeforeunload=function (){
+    if(window.location.href.includes('helpcenter.shoplazza.com') && !window.location.href.includes('chat_gpt_page')) {
+     const saHelpCenterData = JSON.parse(localStorage.getItem("saHelpCenter"));
+            var isActionChangeChatPage = saHelpCenterData.isActionChangeChatPage;
+			var ChatGptOptions = saHelpCenterData.ChatGptOptions
+			var setrtChatGptTime = saHelpCenterData.setrtChatGptTime
+			if(ChatGptOptions!=='stop' && !isNaN(ChatGptOptions)) {
+				 sa.track('aigc_enquiries', {time:new Date().getTime(),frequency:ChatGptOptions,start_time:setrtChatGptTime,end_time:new Date().getTime()});
+				 saHelpCenterData.ChatGptOptions = 'stop'
+                localStorage.setItem("saHelpCenter", JSON.stringify(saHelpCenterData));
+			}
+            if(!isActionChangeChatPage) {
+                sa.track('aigc_left', {time:new Date().getTime()});
+            }
+    }
+  }
+</script>
+<style>
+    .help_center_chat_gpt {
+        z-index: 2;
+        max-width: 720px;
+        margin: 0 auto;
+        transition: top 0.3s ease;
+        min-height: 50vh;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+    }
+
+    .chat_gpt_header .chat_gpt_header_title {
+        font-weight: 700;
+        font-size: 40px;
+        line-height: 150%;
+        color: #000000;
+        margin-bottom: 12px;
+    }
+
+    .chat_gpt_header .chat_gpt_header_version {
+        font-weight: 500;
+        font-size: 18px;
+        line-height: 150%;
+        color: #000000;
+        margin-bottom: 28px;
+    }
+
+    .chat_gpt_input_content {
+        border: 1px solid #e3e3e3;
+        display: flex;
+        align-items: center;
+        padding: 0 5px 0 16px;
+        width: 100%;
+        border-radius: 9px;
+        height: 50px;
+
+    }
+
+    @media (max-width: 767px) {
+        .chat_gpt_search {
+            margin: 0 0 50px;
+        }
+        .chat_gpt_customer_btn {
+            margin-top: 20px;
+        }
+
+    }
+
+    .help_center_chat_gpt .chat_gpt_search {
+        display: flex;
+        align-items: center;
+        height: 50px;
+        margin: 0 0 100px;
+    }
+    .help_center_chat_gpt .chat_gpt_customer_btn {
+        cursor: pointer;
+        width: fit-content;
+        border-radius: 4px;
+        background:  #E7F0FF;
+        padding: 6px 12px;
+        color: #4669BE;
+        font-size: 14px;
+        font-weight: 400;
+        line-height: 150%; 
+        margin-bottom: 18px;
+        margin-top: 40px;
+    }
+
+    .chat_gpt_input_content .chat_gpt_input {
+        font-weight: 400;
+        font-size: 16px;
+        line-height: 150%;
+        color: #0E0E0E;
+        height: 26px;
+        width: 100%;
+        border: none;
+    }
+
+    .chat_gpt_input_content .chat_gpt_send_btn {
+        background: #3F6FF3;
+        border-radius: 8px;
+        padding: 8px 13px 8px 16px;
+        display: flex;
+        align-items: center;
+        cursor: pointer;
+    }
+
+    .chat_gpt_send_btn:hover {
+        background: #365FD3;
+    }
+
+    .chat_gpt_send_btn:active {
+        background: #3153AF;
+    }
+
+    .chat_gpt_send_btn .chat_gpt_send_text {
+        font-weight: 500;
+        font-size: 16px;
+        line-height: 150%;
+        color: #FFFFFF;
+        padding-right: 10px;
+    }
+
+    .chat_gpt_send_btn .chat_gpt_send_icon {
+        width: 13px;
+        height: 14.5px;
+        background-image: url('https://assets.shoplazza.com/oss/operation/da3e893456e3ab3ffdec43ad71c85c7e.png');
+        background-size: 100% 100%;
+    }
+
+    .chat_gpt_search .chat_gpt_clear_btn {
+        padding: 15px;
+        margin-left: 20px;
+        cursor: pointer;
+    }
+
+    .chat_gpt_search .chat_gpt_clear_btn:hover {
+        background: #F3F4F5;
+        border-radius: 4px;
+    }
+
+    .chat_gpt_clear_btn:active {
+        background: #E8E8E9;
+    }
+
+    .chat_gpt_search .chat_gpt_clear_btn img {
+        width: 18px;
+    }
+
+    .chat_gpt_content {}
+
+    .chat_response {
+        display: flex;
+        align-items: center;
+        padding: 20px;
+        margin-bottom: 8px;
+    }
+
+    .chat_response_icon {
+        width: 28px;
+        height: 28px;
+        background: #D9D9D9;
+        border-radius: 50%;
+        margin-right: 16px;
+    }
+
+    .chat_response_msg {
+        font-weight: 400;
+        font-size: 16px;
+        line-height: 150%;
+        color: #000000;
+    }
+
+    .chat_request {
+        
+        
+    }
+    .chat_request_content {
+        background: #F3F4F5;
+        border-radius: 6px;
+        padding: 20px;
+    }
+
+    .chat_request_icon {
+        width: 28px;
+        height: 28px;
+        background: #FFFFFF;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-right: 16px;
+    }
+
+    .chat_request_icon img {
+        height: 16px;
+    }
+
+    .chat_request_info {
+        display: flex;
+        flex-direction: column;
+        flex: 1;
+        position: relative;
+    }
+
+    .chat_request_msg {
+        font-weight: 400;
+        font-size: 16px;
+        line-height: 150%;
+        border-radius: 6px;
+        color: #000000;
+    }
+
+    .last_foot_review_btn {
+        display: flex;
+        align-items: center;
+        justify-content: end;
+        margin-bottom: 6px;
+    }
+
+    .last_foot_response_btn {
+        display: flex;
+        align-items: center;
+        padding: 6px 12px;
+        margin-top: 20px;
+        margin-right: 20px;
+        font-weight: 400;
+        font-size: 14px;
+        line-height: 100%;
+        color: #8E8E8E;
+        border: 1px solid #8e8e8e;
+        cursor: pointer;
+        border-radius: 4px;
+    }
+
+    .last_foot_response_btn:hover {
+        background: #E9ECEF;
+        border: 1px solid #8E8E8E;
+        border-radius: 4px;
+    }
+
+    .last_foot_response_btn img {
+        width: 10px;
+        margin-right: 5px;
+    }
+
+    .loding_request {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-top: 28px;
+    }
+
+    .loding_request_text {
+        font-weight: 500;
+        font-size: 16px;
+        line-height: 150%;
+        color: #4669BE;
+    }
+
+    .loding_request_btn {
+        padding: 5px 10px;
+        border-radius: 5px;
+        font-weight: 400;
+        font-size: 14px;
+        line-height: 100%;
+        color: #8E8E8E;
+        margin-left: 15px;
+        border: 1px solid #e3e3e3;
+    }
+
+    .loding_request_btn:hover {
+        background: #E9ECEF;
+    }
+
+    .loding_request_btn:active {
+        background: #DEE2E6;
+    }
+    .hidden_class {
+        display: none;
+    }
+    .likeAndDislikeContent {
+        display: flex;
+        justify-content: flex-end;
+    }
+    .likeAndDislike {
+        border-radius: 4px;
+        border: 1px solid  #E3E3E3;
+        background:  #FFF;
+        display: flex;
+        margin-top: 12px;
+        margin-bottom: 16px;
+    }
+    .likeAndDislike .ChatLikeBtn {
+        border-right:1px solid  #E3E3E3; ;
+        padding:8px 14px ;
+        cursor: pointer;
+    }
+    .likeAndDislike .ChatLikeBtn:hover{
+        background: #EDEDED;
+    }
+    .likeAndDislike .ChatUnLikeBtn:hover{
+        background: #EDEDED;
+    }
+    .likeAndDislike .ChatUnLikeBtn {
+        padding:8px 14px ;
+        cursor: pointer;
+        
+    }
+    .unLikePosition {
+        border-radius: 5px;
+        background: #fff;
+        padding: 16px;
+        margin-left: 44px;
+        margin-right: 20px;
+        padding-bottom: 0;
+
+    }
+    .unLikePostionRegBtn {
+        flex: 1;
+        text-align: center;
+        padding: 12px;
+        color: #000;
+        font-size: 14px;
+        font-weight: 400;
+        border-radius: 5px;
+        line-height: 150%; 
+        border: 1px solid  #E3E3E3;
+        background:  #fff;
+        margin-bottom: 12px;
+        margin-right: 12px;
+        cursor: pointer;
+    }
+    .unLikePostionRejBtn {
+        flex: 1;
+        text-align: center;
+        padding: 12px;
+        color: #000;
+        font-size: 14px;
+        font-weight: 400;
+        border-radius: 5px;
+        line-height: 150%; 
+        border: 1px solid  #E3E3E3;
+        background:  #fff;
+        margin-bottom: 12px;
+        cursor: pointer;
+    }
+    .chat_request_body {
+        background: #F3F4F5;
+        padding-bottom: 20px;
+    }
+    
+    .unLikePostionBtnList {
+        display: flex;
+        margin-right: 12px;
+
+    }
+    .unLikePostionText {
+        margin-bottom: 12px;
+    }
+    .unLikePostionTextLine {
+        width: calc(100% + 32px );
+        transform: translateX(-16px);
+        height: 1px;
+        background-color: #e3e3e3;
+
+    }
+    .unLikePostionSubmit {
+        border-radius: 0px 0px 5px 5px;
+        background: #FFF;
+        color: #4669BE;
+        font-size: 16px;
+        font-weight: 500;
+        line-height: 150%;
+        text-align: center;
+        padding: 12px;
+        margin: 8px 16px;
+    }
+
+    .openMoreContent {
+        display: flex;
+        align-items: center;
+        
+    }
+    .openMoreLineLeft,
+    .openMoreLineRight {
+        flex: 1;
+        height: 1px;
+        background: #E3E3E3;
+    }
+    .openMoreBtn {
+        margin: 0 20px;
+        border-radius: 4px;
+        background:  #F3F4F5;
+        padding: 6px 16px;
+        color: #000;
+        font-size: 14px;
+        font-weight: 400;
+        line-height: 150%; 
+        display: flex;
+        align-items: center;
+        cursor: pointer;
+    }
+    .openMoreBtn:hover {
+        background-color: #e3e3e3;
+    }
+    .openMoreBtnIcon {
+        display: flex;
+    }
+    .openMoreBtnText {
+        margin-right: 7px;
+    }
+    .unLikePostionSubmitBtn {
+        cursor: pointer;
+    }
+    .chat_request_content_header {
+        display: flex;
+    }
+
+
+
+</style>
+
+

@@ -1,0 +1,670 @@
+<a class="skip-navigation" tabindex="1" href="#main-content">{{t 'skip_navigation' }}</a>
+
+<div class="layout">
+  <div class="layout__head">
+    <header class="topbar is-hidden {{#is settings.hero_show_image 'noe'}}topbar--image{{/is}}" data-topbar>
+<<<<<<< HEAD
+      <div class="topbar__nav container " data-topbar-nav>
+=======
+      <div class="topbar__nav container" data-topbar-nav>
+>>>>>>> 36e0bca9382d2b53e24414367b17228cdeb5653e
+        <div class="container-inner topbar__container-inner">
+          <div class="topbar__inner">
+            <div class="topbar__col clearfix">
+              <div class="logo-wrapper">
+                <div class="logo">
+                  {{#link 'help_center'}}
+                    <img class="logo__main" src="{{settings.logo_main}}" alt="logo">
+                    <img class="logo__secondary" src="{{settings.logo}}" alt="logo">
+                  {{/link}}
+                </div>
+              </div>
+              <p class="help-center-name">
+                {{#if settings.toggle_translations}}
+                  {{dc settings.help_center_title}}
+                {{else}}
+                  {{settings.help_center_title}}
+                {{/if}}
+              </p>
+              <button type="button" role="button" aria-label="{{t 'toggle_navigation'}}" class="lines-button x" data-toggle-menu>
+                <span class="lines"></span></button>
+            </div>
+            <div class="topbar__col topbar__menu">
+              <div class="topbar__collapse" data-menu>
+                <div class="topbar__controls">
+                  {{#if settings.toggle_custom_link}}
+                    <a href="{{#if settings.toggle_translations}}{{dc settings.topbar_custom_link_url}}{{else}}{{settings.topbar_custom_link_url}}{{/if}}" class="topbar__link">
+                      {{#if settings.toggle_translations}}
+<<<<<<< HEAD
+                      	<div class="nav_link">
+                      		<img class="icon" src="https://assets.shoplazza.com/oss/operation/985ee1f0fbafdb3ee42c1a60d4013a91.svg" alt="{{settings.topbar_custom_link_title}}" />
+                        	{{dc settings.topbar_custom_link_title}}
+                      	</div>
+                      {{else}}
+                      	<div class="nav_link">
+													<img class="icon" src="https://assets.shoplazza.com/oss/operation/985ee1f0fbafdb3ee42c1a60d4013a91.svg" alt="{{settings.topbar_custom_link_title}}" />
+													{{settings.topbar_custom_link_title}} 
+                      	</div>
+                      {{/if}}
+                    </a>
+										<div class="divider">{{link 'new_request' class='topbar__link'}}</div>
+                  {{/if}}
+                  {{#if alternative_locales}}
+                    <div class="dropdown divider language-selector {{#if settings.toggle_flags}}language-selector--flags{{/if}}"
+=======
+                        {{dc settings.topbar_custom_link_title}}
+                      {{else}}
+                        {{settings.topbar_custom_link_title}}
+                      {{/if}}
+                    </a>
+                  {{/if}}
+                  {{link 'new_request' class='topbar__link'}}
+                  {{#if alternative_locales}}
+                    <div class="dropdown language-selector {{#if settings.toggle_flags}}language-selector--flags{{/if}}"
+>>>>>>> 36e0bca9382d2b53e24414367b17228cdeb5653e
+                         aria-haspopup="true">
+                      <a data-url="{{current_locale.url}}" class="dropdown-toggle topbar__link">
+                        {{current_locale.name}}
+                      </a>
+                      <span class="dropdown-menu" role="menu">
+                        {{#each alternative_locales}}
+                          <a data-url="{{url}}" href="{{url}}" dir="{{direction}}" rel="nofollow"
+                             role="menuitem">
+                            {{name}}
+                          </a>
+                        {{/each}}
+                      </span>
+                    </div>
+                  {{/if}}
+                  {{#if signed_in}}
+<<<<<<< HEAD
+                    <div id="user" class="dropdown user-info divider" aria-haspopup="true">
+=======
+                    <div id="user" class="dropdown user-info" aria-haspopup="true">
+>>>>>>> 36e0bca9382d2b53e24414367b17228cdeb5653e
+                      <button class="dropdown-toggle dropdown-toggle--user topbar__link">
+                        {{user_avatar class="user-avatar user-avatar--topbar"}}
+                        {{user_name class="user-name"}}
+                      </button>
+                      <div class="dropdown-menu" role="menu">
+                        {{link "my_activities" role="menuitem"}}
+                        {{my_profile role="menuitem"}}
+                        {{change_password role="menuitem"}}
+                        {{link "sign_out" role="menuitem"}}
+                      </div>
+                    </div>
+                  {{else}}
+                    {{#link "sign_in" class='topbar__link'}}
+<<<<<<< HEAD
+                  			<div style="margin: 0px">
+													{{#is current_locale.name '简体中文'}}
+														<a href="https://accounts.shoplazza.com/register" class="trail_btn">免费试用</a>
+                          {{else}}
+														<a href="https://accounts.shoplazza.com/register" class="trail_btn">Free trial</a>
+													{{/is}}
+                  			</div>
+=======
+                      {{t 'sign_in'}}
+>>>>>>> 36e0bca9382d2b53e24414367b17228cdeb5653e
+                    {{/link}}
+                  {{/if}}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+<<<<<<< HEAD
+      <div class="container home-banner">
+        <div class="hero-unit is-hidden" data-hero-unit>
+          <div class="container-inner home-search-container search-box search-box--hero-unit" data-search-box>
+=======
+      <div class="container">
+        <div class="hero-unit is-hidden" data-hero-unit>
+          <div class="container-inner search-box search-box--hero-unit" data-search-box>
+>>>>>>> 36e0bca9382d2b53e24414367b17228cdeb5653e
+            <div class="intro-title">
+              {{#if settings.toggle_translations}}
+                {{dc settings.hero_title}}
+              {{else}}
+                {{settings.hero_title}}
+              {{/if}}
+            </div>
+            {{!-- {{search instant=true placeholder=settings.search_placeholder}} --}}
+             <div class="header_search_input_form"></div>
+
+            {{!-- Search word --}}
+           	  <div class="search_words_wrapper">
+               {{#if settings.search_word1_text_en}}
+                  <a class="search_words_item search_words_item_en" {{#if settings.search_word1_link_en }}href="{{settings.search_word1_link_en}}"{{/if}} target="_blank">{{settings.search_word1_text_en}}
+                  {{#if settings.search_word1_tag_text }} <div class="search_words_tag" style="color: {{settings.search_word1_tag_color}}">{{settings.search_word1_tag_text}}</div>{{/if}}
+                  </a>
+               {{/if}}
+                {{#if settings.search_word1_text_zh}}
+                  <a class="search_words_item search_words_item_zh" {{#if settings.search_word1_link_zh }}href="{{settings.search_word1_link_zh}}"{{/if}} target="_blank">{{settings.search_word1_text_zh}}
+                  {{#if settings.search_word1_tag_text }} <div class="search_words_tag" style="color: {{settings.search_word1_tag_color}}">{{settings.search_word1_tag_text}}</div>{{/if}}
+                  </a>
+               {{/if}}
+
+                {{#if settings.search_word2_text_en}}
+                  <a class="search_words_item search_words_item_en" {{#if settings.search_word2_link_en }}href="{{settings.search_word2_link_en}}"{{/if}} target="_blank">{{settings.search_word2_text_en}}
+                	{{#if settings.search_word2_tag_text }} <div class="search_words_tag" style="color: {{settings.search_word2_tag_color}}">{{settings.search_word2_tag_text}}</div>{{/if}}
+                </a>
+               {{/if}}
+                {{#if settings.search_word2_text_zh}}
+                  <a class="search_words_item search_words_item_zh" {{#if settings.search_word2_link_zh }}href="{{settings.search_word2_link_zh}}"{{/if}} target="_blank">{{settings.search_word2_text_zh}}
+                	{{#if settings.search_word2_tag_text }} <div class="search_words_tag" style="color: {{settings.search_word2_tag_color}}">{{settings.search_word2_tag_text}}</div>{{/if}}
+                </a>
+               {{/if}}
+
+                {{#if settings.search_word3_text_en}}
+<<<<<<< HEAD
+                  <a class="search_words_item search_words_item_en" {{#if settings.search_word3_link_en }}href="{{settings.search_word3_link_en}}"{{/if}} target="_blank">{{settings.search_word3_text_en}}
+                	{{#if settings.search_word3_tag_text }} <div class="search_words_tag" style="color: {{settings.search_word3_tag_color}}">{{settings.search_word3_tag_text}}</div>{{/if}}
+                </a>
+               {{/if}}
+                {{#if settings.search_word3_text_zh}}
+                  <a class="search_words_item search_words_item_zh" {{#if settings.search_word3_link_zh }}href="{{settings.search_word3_link_zh}}"{{/if}} target="_blank">{{settings.search_word3_text_zh}}
+                	{{#if settings.search_word3_tag_text }} <div class="search_words_tag" style="color: {{settings.search_word3_tag_color}}">{{settings.search_word3_tag_text}}</div>{{/if}}
+                </a>
+               {{/if}}
+
+                {{#if settings.search_word4_text_en}}
+                  <a class="search_words_item search_words_item_en" {{#if settings.search_word4_link_en }}href="{{settings.search_word4_link_en}}"{{/if}} target="_blank">{{settings.search_word4_text_en}}
+                	{{#if settings.search_word4_tag_text }} <div class="search_words_tag" style="color: {{settings.search_word4_tag_color}}">{{settings.search_word4_tag_text}}</div>{{/if}}
+                </a>
+               {{/if}}
+                {{#if settings.search_word4_text_zh}}
+                  <a class="search_words_item search_words_item_zh" {{#if settings.search_word4_link_zh }}href="{{settings.search_word4_link_zh}}"{{/if}} target="_blank">{{settings.search_word4_text_zh}}
+                	{{#if settings.search_word4_tag_text }} <div class="search_words_tag" style="color: {{settings.search_word4_tag_color}}">{{settings.search_word4_tag_text}}</div>{{/if}}
+                </a>
+               {{/if}}
+
+                {{#if settings.search_word5_text_en}}
+                  <a class="search_words_item search_words_item_en" {{#if settings.search_word5_link_en }}href="{{settings.search_word5_link_en}}"{{/if}} target="_blank">{{settings.search_word5_text_en}}
+                	{{#if settings.search_word5_tag_text }} <div class="search_words_tag" style="color: {{settings.search_word5_tag_color}}">{{settings.search_word5_tag_text}}</div>{{/if}}
+                </a>
+               {{/if}}
+                {{#if settings.search_word5_text_zh}}
+                  <a class="search_words_item search_words_item_zh" {{#if settings.search_word5_link_zh }}href="{{settings.search_word5_link_zh}}"{{/if}} target="_blank">{{settings.search_word5_text_zh}}
+                	{{#if settings.search_word5_tag_text }} <div class="search_words_tag" style="color: {{settings.search_word5_tag_color}}">{{settings.search_word5_tag_text}}</div>{{/if}}
+                </a>
+               {{/if}}
+
+                {{#if settings.search_word6_text_en}}
+=======
+                  <a class="search_words_item search_words_item_en" {{#if settings.search_word3_link_en }}href="{{settings.search_word3_link_en}}"{{/if}} target="_blank">{{settings.search_word3_text_en}}</a>
+                  {{#if settings.search_word3_tag_text }} <div class="search_words_tag" style="color: {{settings.search_word3_tag_color}}">{{settings.search_word3_tag_text}}</div>{{/if}}
+               {{/if}}
+               {{#if settings.search_word3_text_zh}}
+                  <a class="search_words_item search_words_item_zh" {{#if settings.search_word3_link_zh }}href="{{settings.search_word3_link_zh}}"{{/if}} target="_blank">{{settings.search_word3_text_zh}}</a>
+                  {{#if settings.search_word3_tag_text }} <div class="search_words_tag" style="color: {{settings.search_word3_tag_color}}">{{settings.search_word3_tag_text}}</div>{{/if}}
+               {{/if}}
+
+                {{#if settings.search_word4_text_en}}
+                  <a class="search_words_item search_words_item_en" {{#if settings.search_word4_link_en }}href="{{settings.search_word4_link_en}}"{{/if}} target="_blank">{{settings.search_word4_text_en}}</a>
+                   {{#if settings.search_word4_tag_text }} <div class="search_words_tag" style="color: {{settings.search_word4_tag_color}}">{{settings.search_word4_tag_text}}</div>{{/if}}
+               {{/if}}
+               {{#if settings.search_word4_text_zh}}
+                  <a class="search_words_item search_words_item_zh" {{#if settings.search_word4_link_zh }}href="{{settings.search_word4_link_zh}}"{{/if}} target="_blank">{{settings.search_word4_text_zh}}</a>
+                   {{#if settings.search_word4_tag_text }} <div class="search_words_tag" style="color: {{settings.search_word4_tag_color}}">{{settings.search_word4_tag_text}}</div>{{/if}}
+               {{/if}}
+
+                {{#if settings.search_word5_text_en}}
+                  <a class="search_words_item search_words_item_en" {{#if settings.search_word5_link_en }}href="{{settings.search_word5_link_en}}"{{/if}} target="_blank">{{settings.search_word5_text_en}}</a>
+                  {{#if settings.search_word5_tag_text }} <div class="search_words_tag" style="color: {{settings.search_word5_tag_color}}">{{settings.search_word5_tag_text}}</div>{{/if}}
+               {{/if}}
+               {{#if settings.search_word5_text_zh}}
+                  <a class="search_words_item search_words_item_zh" {{#if settings.search_word5_link_zh }}href="{{settings.search_word5_link_zh}}"{{/if}} target="_blank">{{settings.search_word5_text_zh}}</a>
+                  {{#if settings.search_word5_tag_text }} <div class="search_words_tag" style="color: {{settings.search_word5_tag_color}}">{{settings.search_word5_tag_text}}</div>{{/if}}
+               {{/if}}
+
+
+               {{#if settings.search_word6_text_en}}
+>>>>>>> 36e0bca9382d2b53e24414367b17228cdeb5653e
+                  <a class="search_words_item search_words_item_en" {{#if settings.search_word6_link_en }}href="{{settings.search_word6_link_en}}"{{/if}} target="_blank">{{settings.search_word6_text_en}}</a>
+               {{/if}}
+               {{#if settings.search_word6_text_zh}}
+                  <a class="search_words_item search_words_item_zh" {{#if settings.search_word6_link_zh }}href="{{settings.search_word6_link_zh}}"{{/if}} target="_blank">{{settings.search_word6_text_zh}}</a>
+               {{/if}}
+
+               {{#if settings.search_word7_text_en}}
+                  <a class="search_words_item search_words_item_en" {{#if settings.search_word7_link_en }}href="{{settings.search_word7_link_en}}"{{/if}} target="_blank">{{settings.search_word7_text_en}}</a>
+               {{/if}}
+               {{#if settings.search_word7_text_zh}}
+                  <a class="search_words_item search_words_item_zh" {{#if settings.search_word7_link_zh }}href="{{settings.search_word7_link_zh}}"{{/if}} target="_blank">{{settings.search_word7_text_zh}}</a>
+               {{/if}}
+
+                {{#if settings.search_word8_text_en}}
+                  <a class="search_words_item search_words_item_en" {{#if settings.search_word8_link_en }}href="{{settings.search_word8_link_en}}"{{/if}} target="_blank">{{settings.search_word8_text_en}}</a>
+               {{/if}}
+                {{#if settings.search_word8_text_zh}}
+                  <a class="search_words_item search_words_item_zh" {{#if settings.search_word8_link_zh }}href="{{settings.search_word8_link_zh}}"{{/if}} target="_blank">{{settings.search_word8_text_zh}}</a>
+               {{/if}}
+
+                {{#if settings.search_word9_text_en}}
+                  <a class="search_words_item search_words_item_en" {{#if settings.search_word9_link_en }}href="{{settings.search_word9_link_en}}"{{/if}} target="_blank">{{settings.search_word9_text_en}}</a>
+               {{/if}}
+               {{#if settings.search_word9_text_zh}}
+                  <a class="search_words_item search_words_item_zh" {{#if settings.search_word9_link_zh }}href="{{settings.search_word9_link_zh}}"{{/if}} target="_blank">{{settings.search_word9_text_zh}}</a>
+               {{/if}}
+
+                {{#if settings.search_word10_text_en}}
+                  <a class="search_words_item search_words_item_en" {{#if settings.search_word10_link_en }}href="{{settings.search_word10_link_en}}"{{/if}} target="_blank">{{settings.search_word10_text_en}}</a>
+               {{/if}}
+                {{#if settings.search_word10_text_zh}}
+                  <a class="search_words_item search_words_item_zh" {{#if settings.search_word10_link_zh }}href="{{settings.search_word10_link_zh}}"{{/if}} target="_blank">{{settings.search_word10_text_zh}}</a>
+               {{/if}}
+
+                {{#if settings.search_word11_text_en}}
+                  <a class="search_words_item search_words_item_en" {{#if settings.search_word11_link_en }}href="{{settings.search_word11_link_en}}"{{/if}} target="_blank">{{settings.search_word11_text_en}}</a>
+               {{/if}}
+                {{#if settings.search_word11_text_zh}}
+                  <a class="search_words_item search_words_item_zh" {{#if settings.search_word11_link_zh }}href="{{settings.search_word11_link_zh}}"{{/if}} target="_blank">{{settings.search_word11_text_zh}}</a>
+               {{/if}}
+
+                {{#if settings.search_word12_text_en}}
+                  <a class="search_words_item search_words_item_en" {{#if settings.search_word12_link_en }}href="{{settings.search_word12_link_en}}"{{/if}} target="_blank">{{settings.search_word12_text_en}}</a>
+               {{/if}}
+               {{#if settings.search_word12_text_zh}}
+                  <a class="search_words_item search_words_item_zh" {{#if settings.search_word12_link_zh }}href="{{settings.search_word12_link_zh}}"{{/if}} target="_blank">{{settings.search_word12_text_zh}}</a>
+               {{/if}}
+
+                {{#if settings.search_word13_text_en}}
+                  <a class="search_words_item search_words_item_en" {{#if settings.search_word13_link_en }}href="{{settings.search_word13_link_en}}"{{/if}} target="_blank">{{settings.search_word13_text_en}}</a>
+               {{/if}}
+              {{#if settings.search_word13_text_zh}}
+                  <a class="search_words_item search_words_item_zh" {{#if settings.search_word13_link_zh }}href="{{settings.search_word13_link_zh}}"{{/if}} target="_blank">{{settings.search_word13_text_zh}}</a>
+               {{/if}}
+
+                {{#if settings.search_word14_text_en}}
+                  <a class="search_words_item search_words_item_en" {{#if settings.search_word14_link_en }}href="{{settings.search_word14_link_en}}"{{/if}} target="_blank">{{settings.search_word14_text_en}}</a>
+               {{/if}}
+               {{#if settings.search_word14_text_zh}}
+                  <a class="search_words_item search_words_item_zh" {{#if settings.search_word14_link_zh }}href="{{settings.search_word14_link_zh}}"{{/if}} target="_blank">{{settings.search_word14_text_zh}}</a>
+               {{/if}}
+
+                {{#if settings.search_word15_text_en}}
+                  <a class="search_words_item search_words_item_en" {{#if settings.search_word15_link_en }}href="{{settings.search_word15_link_en}}"{{/if}} target="_blank">{{settings.search_word15_text_en}}</a>
+               {{/if}}
+                {{#if settings.search_word15_text_zh}}
+                  <a class="search_words_item search_words_item_zh" {{#if settings.search_word15_link_zh }}href="{{settings.search_word15_link_zh}}"{{/if}} target="_blank">{{settings.search_word15_text_zh}}</a>
+               {{/if}}
+<<<<<<< HEAD
+=======
+
+>>>>>>> 36e0bca9382d2b53e24414367b17228cdeb5653e
+            </div>
+
+
+          </div>
+        </div>
+      </div>
+    </header>
+  </div>
+  <script type="text/javascript">
+                var language = LotusUtils.getLocale();
+
+var hiddenSearchQueryDom = document.querySelector("#hidden_query")
+var searchparams =  hiddenSearchQueryDom ?.innerText
+  document.addEventListener('DOMContentLoaded', function() {
+    // 获取搜索框元素
+    var header_search_input_form = document.getElementsByClassName('header_search_input_form')[0];
+    var html = `<form role="search" class="search" data-search="" data-instant="true" autocomplete="off" action="/hc/${language}/search" accept-charset="UTF-8" method="get">`
+    html+=`
+     <input name="utf8" type="hidden" value="✓" autocomplete="off">
+     <input name="filter_by" type="hidden" value="knowledge_base" autocomplete="off">
+<<<<<<< HEAD
+     <div class="home-search">
+            <input type="search" style="border: none;padding: 0 24px" name="query" id="query" value="${searchparams?searchparams:''}" placeholder="${language == 'zh-cn' ? '请输入您的问题...' : 'Type your question here...' }" autocomplete="off" aria-label="search_placeholder" class="input-search">
+    <input type="submit" name="commit" class="btn-search" value="${language == 'zh-cn' ? '搜索' : 'Search' }">
+     </div>
+=======
+     <input type="search" name="query" id="query" value="${searchparams?searchparams:''}" placeholder="${language == 'zh-cn' ? '请输入您的问题...' : 'Type your question here...' }" autocomplete="off" aria-label="search_placeholder">
+    <input type="submit" name="commit"  value="${language == 'zh-cn' ? '搜索' : 'Search' }">
+>>>>>>> 36e0bca9382d2b53e24414367b17228cdeb5653e
+    `
+    html+='</form>'
+    header_search_input_form.innerHTML= html
+  });
+  
+</script>
+<<<<<<< HEAD
+
+<script>
+  const icon = document.querySelector('.icon');
+  icon.parentElement.href = 'https://www.shoplazza.cn';
+  const navLinks = document.querySelectorAll('.nav_link a');
+  console.log(navLinks.forEach)
+  navLinks.forEach((item) => {
+  	item.target = "_blank";
+  })
+  const head = document.querySelector("head");
+  const meta = document.createElement("meta");
+  meta.setAttribute(name, "baidu-site-verification");
+  meta.setAttribute(content, "codeva-UOrSY1jQku");
+  head.appendChild(meta);
+  </script>
+<style>
+.nav_link {
+	display: flex;
+  align-items: center;
+  height: fit-content;
+  padding 2px 12px;
+}
+.nav_link .icon {
+  margin: 2px 8px 2px 0px;
+}
+.request_submit {
+	text-decoration: none;  
+  color: #222;
+  background-color: transparent;
+}
+.trail_btn {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+	color: #fff;
+  border-radius: 4px;
+  padding: 11px 20px;
+  background-color: #222;
+  text-decoration: none;
+}
+.link_svg_bg::before {
+  content: '';
+	background-image: url('https://assets.shoplazza.com/oss/operation/985ee1f0fbafdb3ee42c1a60d4013a91.svg');
+  background-repeat: no-repeat;
+}
+.search:before {
+=======
+<style>
+  .search:before {
+>>>>>>> 36e0bca9382d2b53e24414367b17228cdeb5653e
+  position: absolute;
+  top: 50%;
+  width: 24px;
+  height: 24px;
+  content: "";
+  background: url(data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20width%3D%2223%22%20height%3D%2224%22%20viewBox%3D%220%200%2023%2024%22%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%3Cg%20fill%3D%22none%22%20fill-rule%3D%22evenodd%22%20transform%3D%22translate%28-6%20-2%29%22%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%3Ccircle%20cx%3D%2219.889%22%20cy%3D%2211.611%22%20r%3D%228%22%20stroke%3D%22%23BDBDBD%22%20stroke-width%3D%222%22%20transform%3D%22rotate%2845%2019.89%2011.61%29%22%3E%3C/circle%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%3Cpath%20fill%3D%22%23BDBDBD%22%20fill-rule%3D%22nonzero%22%20d%3D%22M9.34328327%2C15.6566781%20L11.3432833%2C15.6566781%20L11.3432833%2C25.6606781%20C11.3432833%2C26.2106781%2010.8992833%2C26.6566781%2010.3432833%2C26.6566781%20C9.79128327%2C26.6566781%209.34328327%2C26.2116781%209.34328327%2C25.6606781%20L9.34328327%2C15.6566781%20Z%22%20transform%3D%22rotate%2845%2010.343%2021.157%29%22%3E%3C/path%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%3C/g%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%3C/svg%3E)
+    no-repeat;
+  transform: translateY(-50%);
+}
+
+  .search_words_wrapper{
+    margin-top: 30px;
+    display: flex;
+    flex-wrap: wrap;
+  	column-gap:32px;
+  	row-gap:12px
+  }
+  .search_words_item{
+	  position: relative;
+    height: 40px;
+    line-height: 40px;
+    border-radius: 40px;
+    padding: 0 16px;
+<<<<<<< HEAD
+    background-color: rgba(255, 255, 255, 0.80);
+=======
+    background-color: #eee;
+>>>>>>> 36e0bca9382d2b53e24414367b17228cdeb5653e
+    color: #555;
+  }
+
+  html[lang="en-US"] .search_words_item_zh{
+    display: none;
+  }
+  html[lang="zh-CN"] .search_words_item_en{
+    display: none;
+  }
+
+  .search_words_item:focus{
+  	color:#555;
+  }
+  .search_words_item:hover{
+    color: white;
+    background-color: #333;
+  	cursor:pointer;
+  }
+  
+  .search_words_tag{
+    position: absolute;
+    right: -24px;
+    top:-16px;
+	  font-size:12px;
+  }
+<<<<<<< HEAD
+</style>
+<style>
+.chatbot-buttons-container {
+	opacity: 0;
+	transition: opacity 1s;
+	position: fixed;
+	bottom: 10px;
+	right: 10px;
+}
+
+.chatbot-buttons-container>div:first-child {
+	display: flex;
+	gap: 8px;
+}
+
+.chatbot-buttons-container .close-button {
+	color-scheme: light;
+	height: 40px;
+	width: 40px;
+	border: 0px;
+	background-color: transparent;
+	box-shadow: rgba(23, 73, 77, 0.15) 0px 20px 30px;
+	border-radius: 100%;
+	vertical-align: unset;
+	opacity: 1;
+	align-self: end;
+}
+
+.chatbot-buttons-container .close-button button {
+	border: 0px;
+	background: rgb(255, 255, 255);
+	color: rgb(47, 57, 65);
+	border-radius: 1.25rem;
+	display: flex;
+	-webkit-box-align: center;
+	align-items: center;
+	-webkit-box-pack: center;
+	justify-content: center;
+	opacity: 0.8;
+	width: 2.5rem;
+	height: 2.5rem;
+	transform-origin: center bottom;
+}
+
+.chatbot-buttons-container .open-button button {
+	padding: 0.75rem;
+	border: 0px;
+	width: max-content;
+	max-width: 280px;
+	overflow-wrap: break-word;
+	word-break: break-word;
+	background: rgb(255, 255, 255);
+	color: rgb(0, 0, 0);
+	border-radius: 1.25rem;
+	text-align: initial;
+	outline: none;
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+}
+
+.chatbot-buttons-container .open-button {
+	color-scheme: light;
+	width: 144.82px;
+	height: 44px;
+	max-width: 280px;
+	overflow: auto;
+	border: 0px;
+	background-color: transparent;
+	box-shadow: rgba(23, 73, 77, 0.15) 0px 20px 30px;
+	border-radius: 20px;
+	vertical-align: unset;
+	transform-origin: right bottom;
+	display: flex;
+	align-items: center;
+	justify-content: center
+}
+
+.main-button {
+	width: 64px;
+	height: 64px;
+	border-radius: 50%;
+	box-shadow: rgba(36, 36, 36, 0.15) 0px 20px 30px 0px;
+	display: flex;
+	-webkit-box-align: center;
+	align-items: center;
+	-webkit-box-pack: center;
+	justify-content: center;
+	background-color: rgb(242, 234, 218) !important;
+	margin-top: 10px;
+	margin-left: auto;
+}
+
+.main-button button {
+	position: relative;
+	display: inline-flex;
+	-webkit-box-align: center;
+	align-items: center;
+	-webkit-box-pack: center;
+	justify-content: center;
+	transition: border-color 0.25s ease-in-out, box-shadow 0.1s ease-in-out, background-color 0.25s ease-in-out, color 0.25s ease-in-out, outline-color 0.1s ease-in-out, z-index 0.25s ease-in-out;
+	margin: 0px;
+	border-radius: 4px;
+	cursor: pointer;
+	overflow: hidden;
+	text-decoration: none;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+	font-family: inherit;
+	font-weight: 400;
+	-webkit-font-smoothing: subpixel-antialiased;
+	box-sizing: border-box;
+	user-select: none;
+	height: 40px;
+	line-height: 38px;
+	font-size: 14px;
+	outline-color: transparent;
+	background-color: transparent;
+	border: none;
+	padding: 0px;
+	width: 40px;
+	min-width: 40px;
+	color: rgb(104, 115, 125);
+}
+
+.chat-icon {
+	position: absolute;
+	left: 0px;
+	display: flex;
+	-webkit-box-align: center;
+	align-items: center;
+	-webkit-box-pack: center;
+	justify-content: center;
+	height: 100%;
+	width: 100%;
+	transition: top 0.5s cubic-bezier(0.66, 0, 0.12, 1);
+	top: 0%;
+}
+
+.arrow-icon {
+	position: absolute;
+	left: 0px;
+	display: flex;
+	-webkit-box-align: center;
+	align-items: center;
+	-webkit-box-pack: center;
+	justify-content: center;
+	height: 100%;
+	width: 100%;
+	transition: top 0.5s cubic-bezier(0.66, 0, 0.12, 1);
+	top: 100%;
+}
+@media (max-width: 768px) {
+	.divider {
+  	padding: 12px 0px;
+  	border-top: 1px solid rgba(0, 0, 0, 0.08);
+  } 
+  .divider:empty {
+  	padding: 0px;
+		border-top:	none;
+  }
+  .nav_link {
+  	padding: 12px 0;
+  }
+}
+</style>
+<style>
+.home-banner {
+	background: linear-gradient(180deg, #F9F5ED 0%, #FEF3DA 100%);  
+}
+.home-search-container {
+	max-width: 788px;  
+}
+.home-search {
+  width: 100%;
+  height: 48px;
+  display: flex;
+	background-color: #fff;
+  padding: 4px 4px 4px 24px;
+  border-radius: 100px;
+}
+.home-search-container .home-search .btn-search {
+	border-radius: 100px;
+  height: auto;
+  padding: 12px 38px;
+	line-height: 1;
+}
+.search_words_wrapper .search_words_item:hover {
+  background-color: #FFA180;
+}
+.search_words_wrapper .search_words_item:hover {
+  background-color: #FFA180;
+}
+.search-box--hero-unit #query {
+  height: auto;
+}
+@media (max-width: 768px) {
+  .hero-unit {
+  	padding: 113px 5px 40px 5px;
+  }
+  .intro-title {
+  	margin-bottom: 34px;
+  }
+  .search_words_wrapper {
+  	margin-top: 20px;
+  }
+  .search-box--hero-unit #query {
+  	height: auto
+  }
+	.search-box--hero-unit input[type=submit] {
+  	height: auto;
+  }
+  .home-search-container .home-search .btn-search {
+  	padding: 8px 28px;
+  }
+  .home-search-container {
+  	padding: 0 -10px 0 5px;
+  }
+  .home-search {
+  	height: 48px;
+  }
+	.search-box--hero-unit input[type=submit] {
+  	display: block;
+  	padding:8px 28px;
+  	margin-left: 8px;
+  }
+}
+=======
+
+  
+
+>>>>>>> 36e0bca9382d2b53e24414367b17228cdeb5653e
+</style>
+  <div class="layout__content">
