@@ -36,5 +36,5 @@ push_to_github:
       exit 1
     fi
   rules:
-    - if: $CI_COMMIT_BRANCH  # 当有分支提交时触发任务
+    - if: '$CI_COMMIT_BRANCH'  # 当有分支提交时触发任务
       when: always
