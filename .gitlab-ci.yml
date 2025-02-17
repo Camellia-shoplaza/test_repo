@@ -5,42 +5,66 @@ push_to_github:
   stage: push_to_github
   image: alpine:latest
   before_script:
-    # 安装 SSH 客户端和 Git
-    - apk add --no-cache openssh git
-    # 安装 git lfs
-    - apk add --no-cache git-lfs
-    # 初始化 git lfs
-    - git lfs install
-    # 设置要跟踪的大文件类型，这里以 .pdf 和 .zip 文件为例
-    - git lfs track "*.pdf" "*.zip"
-    - git add .gitattributes
-    # 创建 SSH 目录
+    # 基础设置
+    - apk add --no-cache openssh git git-lfs
+    
+    # SSH 配置
     - mkdir -p ~/.ssh
-    # 设置 SSH 私钥
     - echo "$SSH_PRIVATE_KEY" > ~/.ssh/id_rsa
     - chmod 600 ~/.ssh/id_rsa
-    # 添加 GitHub 的 SSH 指纹
     - ssh-keyscan github.com >> ~/.ssh/known_hosts
-    # 配置 Git 用户信息
+    
+    # Git 配置
     - git config --global user.email "lijiayang@shoplazza.com"
     - git config --global user.name "Lijiayang"
+    
+    # Git LFS 配置
+    - git lfs install
+    - git lfs track "*.pdf" "*.zip"
+    - git add .gitattributes
+    
+    # 提高 Git 缓冲区大小
+    - git config --global http.postBuffer 524288000
+    - git config --global core.compression 9
+    
+    # 清理和重置仓库状态
+    - git clean -fd
+    - git reset --hard HEAD
+    - git gc --prune=now
+    - git remote prune origin
   script:
-    # 添加 GitHub 仓库作为远程仓库
+    # 确保获取所有 LFS 对象
+    - git lfs fetch --all
+    - git lfs pull
+    
+    # 添加并推送到 GitHub
     - git remote add github git@github.com:Camellia-shoplaza/test_repo.git
     - |
       MAX_RETRIES=3
       RETRY_COUNT=0
       while [ $RETRY_COUNT -lt $MAX_RETRIES ]; do
-        if git push -f github HEAD:refs/heads/master; then
+        echo "尝试推送，第 $((RETRY_COUNT + 1)) 次..."
+        if git push -f github HEAD:refs/heads/master --verbose; then
+          echo "推送成功！"
           break
         fi
         RETRY_COUNT=$((RETRY_COUNT + 1))
-        sleep 5
+        if [ $RETRY_COUNT -lt $MAX_RETRIES ]; then
+          echo "推送失败，等待 10 秒后重试..."
+          sleep 10
+          # 在重试之前重新拉取
+          git fetch --all
+          git reset --hard HEAD
+        fi
       done
       if [ $RETRY_COUNT -eq $MAX_RETRIES ]; then
         echo "推送失败，达到最大重试次数"
         exit 1
       fi
   rules:
-    - if: '$CI_COMMIT_BRANCH'  # 当有分支提交时触发任务
+    - if: '$CI_COMMIT_BRANCH'
       when: always
+  variables:
+    GIT_LFS_SKIP_SMUDGE: '0'
+    GIT_STRATEGY: clone
+    GIT_DEPTH: '0'  # 完整克隆仓库
