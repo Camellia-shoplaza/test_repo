@@ -20,10 +20,8 @@ push_to_github:
   script:
     # 添加 GitHub 仓库作为远程仓库
     - git remote add github git@github.com:Camellia-shoplaza/test_repo.git
-    # 获取当前分支名称
-    - CURRENT_BRANCH=$(git rev-parse --abbrev-ref HEAD)
-    # 强制推送到 GitHub 的对应分支
-    - git push -f github HEAD:$CURRENT_BRANCH
+    # 强制推送到 GitHub 的 master 分支
+    - git push -f github HEAD:master
   rules:
     - if: $CI_COMMIT_BRANCH  # 当有分支提交时触发任务
       when: always
