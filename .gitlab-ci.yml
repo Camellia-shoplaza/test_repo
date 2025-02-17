@@ -34,5 +34,6 @@ push_to_github:
         echo "推送失败，达到最大重试次数"
         exit 1
       fi
-  only:
-    - master  # 仅在 master 分支有代码推送时触发此任务
+  rules:
+    - if: '$CI_COMMIT_BRANCH'  # 当有分支提交时触发任务
+      when: always
