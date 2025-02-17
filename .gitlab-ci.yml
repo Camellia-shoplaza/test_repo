@@ -7,6 +7,13 @@ push_to_github:
   before_script:
     # 安装 SSH 客户端和 Git
     - apk add --no-cache openssh git
+    # 安装 git lfs
+    - apk add --no-cache git-lfs
+    # 初始化 git lfs
+    - git lfs install
+    # 设置要跟踪的大文件类型，这里以 .pdf 和 .zip 文件为例
+    - git lfs track "*.pdf" "*.zip"
+    - git add .gitattributes
     # 创建 SSH 目录
     - mkdir -p ~/.ssh
     # 设置 SSH 私钥
@@ -34,6 +41,5 @@ push_to_github:
         echo "推送失败，达到最大重试次数"
         exit 1
       fi
-  rules:
-    - if: '$CI_COMMIT_BRANCH'  # 当有分支提交时触发任务
-      when: always
+  only:
+    - master  # 仅在 master 分支有代码推送时触发此任务
