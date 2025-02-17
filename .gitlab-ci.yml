@@ -35,8 +35,6 @@ push_to_github:
       echo "推送失败，达到最大重试次数"
       exit 1
     fi
-    # 强制推送到 GitHub 的 master 分支
-    - git push -f github HEAD:master
   rules:
     - if: $CI_COMMIT_BRANCH  # 当有分支提交时触发任务
       when: always
