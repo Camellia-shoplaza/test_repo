@@ -32,14 +32,7 @@ push_to_github:
     - echo "开始添加 GitHub 仓库作为远程仓库"
     - git remote add github git@github.com:Camellia-shoplaza/test_repo.git
     - echo "GitHub 仓库作为远程仓库添加完成"
-    - echo "开始拉取远程仓库最新代码"
-    - |
-      if ! git pull --rebase github master; then
-        echo "拉取代码并 rebase 失败，可能存在冲突，请手动解决"
-        git rebase --abort
-        exit 1
-      fi
-    - echo "远程仓库最新代码拉取完成"
+    # 推送代码到 GitHub
     - |
       MAX_RETRIES=3
       RETRY_COUNT=0
